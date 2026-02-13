@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi niña preciosa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #fff0f3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            perspective: 1200px;
+        }
+
+        /* FOTOS: Posición ajustada */
+        .foto-circular {
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            border: 3px solid #ffb3c1;
+            object-fit: cover;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.2);
+        }
+        .foto1 { top: 2%; left: 3%; }
+        .foto2 { top: 2%; right: 3%; }
+        .foto3 { bottom: 15%; left: 3%; } /* Subidas como pediste */
+        .foto4 { bottom: 15%; right: 3%; }
+
+        /* CONTADOR: Más abajo para no estorbar fotos de arriba */
+        .contador-container {
+            margin-top: 50px;
+            text-align: center;
+            z-index: 5;
+            color: #d63384;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 15px;
+            border-radius: 15px;
+            border: 1px solid #ffb3c1;
+        }
+        .reloj { font-size: 1.1rem; font-weight: bold; }
+
+        /* TEXTO QUE DESAPARECE: Encima de la caja */
+        #titulo-encima {
+            font-family: 'Dancing Script', cursive;
+            color: #d63384;
+            font-size: 1.7rem;
+            position: absolute;
+            top: 45%; /* Justo al frente de la caja */
+            transition: all 0.5s ease;
+            z-index: 50; /* Por encima de todo para que se vea claro */
+            text-align: center;
+            width: 100%;
+            pointer-events: none; /* Para que al tocar el texto, toque la caja */
+        }
+        .ocultar { opacity: 0; transform: scale(0.5); }
+
+        /* CAJA 3D */
+        .gift-container {
+            position: relative;
+            width: 180px;
+            height: 160px;
+            margin-top: 80px;
+            transform-style: preserve-3d;
+            transform: rotateX(-15deg) rotateY(15deg);
+            transition: transform 1s ease;
+            cursor: pointer;
+            z-index: 20;
+        }
+        .gift-container.open { 
+            transform: rotateX(0deg) rotateY(0deg) translateY(50px); 
+        }
+
+        .face {
+            position: absolute;
+            width: 180px;
+            height: 160px;
+            background: #ff758f;
+            border: 2px solid #ff4d6d;
+            box-sizing: border-box;
+        }
+        .front  { transform: translateZ(90px); }
+        .back   { transform: rotateY(180deg) translateZ(90px); }
+        .left   { transform: rotateY(-90deg) translateZ(90px); }
+        .right  { transform: rotateY(90deg) translateZ(90px); }
+        .bottom { transform: rotateX(-90deg) translateZ(80px); background: #e63946; height: 180px; }
+
+        /* TAPA */
+        .lid {
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            background: #ff4d6d;
+            border: 2px solid #d63384;
+            top: -5px;
+            left: -5px;
+            transform: rotateX(90deg) translateZ(90px);
+            transform-origin: top;
+            transition: transform 1s ease;
+            z-index: 10;
+        }
+        .gift-container.open .lid { transform: rotateX(90deg) rotateX(-120deg) translateZ(90px); }
+
+        /* NOTA BLANCA: Sale por completo al frente */
+        .message-card {
+            position: absolute;
+            width: 160px;
+            height: 140px;
+            left: 10px;
+            top: 10px;
+            background: white;
+            color: #c9184a;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateZ(0); /* Dentro de la caja al inicio */
+            z-index: 100; /* Para que salga enfrente de la caja */
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+        }
+        
+        /* Animación cuando se abre: se pone al frente y sube */
+        .gift-container.open .message-card {
+            transform: translateZ(150px) translateY(-180px); 
+            width: 260px; /* Más grande para leer todo */
+            height: 220px;
+            left: -40px; /* Centrar la nota grande */
+            font-size: 1.2rem;
+        }
+
+        .guia { margin-top: 80px; color: #ff85a1; font-size: 14px; }
+
+    </style>
+</head>
+<body>
+
+    <img src="foto1.jpg" class="foto-circular foto1">
+    <img src="foto2.jpg" class="foto-circular foto2">
+    <img src="foto3.jpg" class="foto-circular foto3">
+    <img src="foto4.jpg" class="foto-circular foto4">
+
+    <div class="contador-container">
+        <div style="font-size: 0.8rem;">Llevamos juntos...</div>
+        <div id="reloj" class="reloj">Cargando...</div>
+    </div>
+
+    <div id="titulo-encima">Para mi noviecita preciosa 💓</div>
+
+    <div class="gift-container" onclick="abrirCaja()">
+        <div class="message-card">
+            No importa dónde esté yo hoy, mi pensamiento y mi corazón están allá contigo. 
+            <br><br>
+            Feliz 14 de febrero a la mujer más bonita del mundo. 
+            <br><br>
+            Te amo siempre ❤️
+        </div>
+        <div class="face front"></div>
+        <div class="face back"></div>
+        <div class="face left"></div>
+        <div class="face right"></div>
+        <div class="face bottom"></div>
+        <div class="lid"></div>
+    </div>
+
+    <p class="guia" id="instruccion">(Toca la cajita para ver la magia)</p>
+
+    <script>
+        function abrirCaja() {
+            const box = document.querySelector('.gift-container');
+            const titulo = document.getElementById('titulo-encima');
+            const guia = document.getElementById('instruccion');
+            
+            box.classList.toggle('open');
+            
+            if(box.classList.contains('open')) {
+                titulo.classList.add('ocultar');
+                guia.style.opacity = "0";
+            } else {
+                titulo.classList.remove('ocultar');
+                guia.style.opacity = "1";
+            }
+        }
+
+        function actualizarContador() {
+            const inicio = new Date("2023-02-11T00:00:00");
+            const ahora = new Date();
+            const diff = ahora - inicio;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById("reloj").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+        }
+        setInterval(actualizarContador, 1000);
+        actualizarContador();
+    </script>
+</body>
+      </html>

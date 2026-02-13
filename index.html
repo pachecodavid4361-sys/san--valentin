@@ -3,154 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi niña preciosa❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <title>Para mi niña preciosa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #fff0f3;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center;
             min-height: 100vh;
             margin: 0;
-            font-family: 'Quicksand', sans-serif;
+            font-family: sans-serif;
             overflow: hidden;
-            perspective: 2000px;
+            position: relative;
         }
 
-        /* FOTOS: No se tocan con nada */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d63384;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            z-index: 20;
+            transition: 0.5s;
+        }
+
+        /* AJUSTE PARA QUE LOS ROSTROS SE VEAN BIEN */
         .foto-circular {
             position: absolute;
-            width: 115px;
-            height: 115px;
+            width: 110px; /* Un poco más grandes para que luzcan */
+            height: 110px;
             border-radius: 50%;
             border: 4px solid #ffb3c1;
-            object-fit: cover;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
-        }
-        .foto1 { top: 2%; left: 2%; }
-        .foto2 { top: 2%; right: 2%; }
-        .foto3 { bottom: 8%; left: 2%; } 
-        .foto4 { bottom: 8%; right: 2%; }
-
-        /* CONTADOR: Posición segura arriba */
-        .contador-container {
-            margin-top: 50px;
-            text-align: center;
+            
+            /* ESTO EVITA QUE SE CORTEN FEO */
+            object-fit: cover;      /* Llena el círculo sin estirar la imagen */
+            object-position: center; /* Centra la imagen en el rostro */
+            
             z-index: 10;
-            color: #d63384;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px 25px;
-            border-radius: 20px;
-            border: 1px solid #ffb3c1;
+            box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+            animation: flotar 4s infinite ease-in-out;
         }
-        .reloj { font-size: 1.3rem; font-weight: bold; }
 
-        /* TEXTO ROJO EN MEDIO DE LA CAJA */
-        #titulo-encima {
-            font-family: 'Dancing Script', cursive;
-            color: #ff0000; /* ROJO PURO */
-            font-size: 1.8rem;
-            position: absolute;
-            top: 52%; /* Justo en el centro de la caja */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.4s ease;
-            z-index: 60;
-            text-align: center;
-            width: 90%;
-            pointer-events: none;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        /* Posiciones exactas */
+        .foto1 { top: 5%; left: 8%; animation-delay: 0s; }
+        .foto2 { top: 5%; right: 8%; animation-delay: 1s; }
+        .foto3 { bottom: 12%; left: 8%; animation-delay: 0.5s; }
+        .foto4 { bottom: 12%; right: 8%; animation-delay: 1.5s; }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-12px) scale(1.02); }
         }
-        .ocultar { opacity: 0; visibility: hidden; }
 
-        /* CAJA 3D */
         .gift-container {
             position: relative;
-            width: 210px;
-            height: 190px;
-            margin-top: 100px; /* Bajada para que la tapa no toque el contador */
-            transform-style: preserve-3d;
-            transform: rotateX(-15deg) rotateY(15deg);
-            transition: transform 1s ease;
-            cursor: pointer;
-            z-index: 20;
-        }
-        .gift-container.open { 
-            transform: rotateX(0deg) rotateY(0deg) translateY(80px); 
-        }
-
-        .face {
-            position: absolute;
-            width: 210px;
-            height: 190px;
-            background: #ff758f;
-            border: 2px solid #ff4d6d;
-            box-sizing: border-box;
-        }
-        .front  { transform: translateZ(105px); }
-        .back   { transform: rotateY(180deg) translateZ(105px); }
-        .left   { transform: rotateY(-90deg) translateZ(105px); }
-        .right  { transform: rotateY(90deg) translateZ(105px); }
-        .bottom { transform: rotateX(-90deg) translateZ(95px); background: #e63946; height: 210px; }
-
-        .lid {
-            position: absolute;
-            width: 220px;
-            height: 220px;
-            background: #ff4d6d;
-            border: 2px solid #d63384;
-            top: -5px;
-            left: -5px;
-            transform: rotateX(90deg) translateZ(105px);
-            transform-origin: top;
-            transition: transform 1s ease;
-            z-index: 10;
-        }
-        .gift-container.open .lid { transform: rotateX(90deg) rotateX(-110deg) translateZ(105px); }
-
-        /* NOTA BLANCA: Posición final ajustada para no tapar el contador */
-        .message-card {
-            position: absolute;
-            width: 180px;
-            height: 160px;
-            left: 15px;
-            top: 15px;
-            background: white;
-            color: #c9184a;
-            padding: 20px;
+            width: 250px;
+            height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 15;
+        }
+
+        .gift-container:hover ~ h1, 
+        .gift-container:active ~ h1 { 
+            opacity: 0; 
+        }
+
+        .message-inside {
+            position: absolute;
+            width: 85%;
             text-align: center;
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: translateZ(0); 
-            z-index: 200;
-            box-sizing: border-box;
-            border: 1px solid #eee;
-        }
-        
-        /* Cuando se abre, la nota sube pero se queda abajo del contador */
-        .gift-container.open .message-card {
-            transform: translateZ(220px) translateY(-160px); 
-            width: 290px; 
-            height: 230px;
-            left: -40px; 
-            font-size: 1.3rem;
-        }
-
-        .guia { 
-            margin-top: 120px; 
-            color: #ff85a1; 
-            font-size: 14px; 
+            color: #c9184a;
+            font-size: 0.85rem;
             font-weight: bold;
+            z-index: 1;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
+        .lid {
+            position: absolute;
+            background-color: #ff758f;
+            border: 2px solid #ff4d6d;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+        }
+
+        .top    { width: 100%; height: 50%; top: 0; transform-origin: top; }
+        .bottom { width: 100%; height: 50%; bottom: 0; transform-origin: bottom; }
+        .left   { width: 50%; height: 100%; left: 0; transform-origin: left; }
+        .right  { width: 50%; height: 100%; right: 0; transform-origin: right; }
+
+        .gift-container:hover .top    { transform: perspective(1000px) rotateX(110deg); opacity: 0; }
+        .gift-container:hover .bottom { transform: perspective(1000px) rotateX(-110deg); opacity: 0; }
+        .gift-container:hover .left   { transform: perspective(1000px) rotateY(-110deg); opacity: 0; }
+        .gift-container:hover .right  { transform: perspective(1000px) rotateY(110deg); opacity: 0; }
+
+        .heart {
+            position: absolute;
+            display: none;
+            color: #ff0000;
+            font-size: 28px;
+            top: 50%;
+            left: 50%;
+            z-index: 20;
+        }
+
+        .gift-container:hover .heart {
+            display: block;
+            animation: saltar 1.5s infinite ease-out;
+        }
+
+        @keyframes saltar {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(2); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -160,60 +132,28 @@
     <img src="Foto3.jpg" class="foto-circular foto3">
     <img src="Foto4.jpg" class="foto-circular foto4">
 
-    <div class="contador-container">
-        <div style="font-size: 0.8rem;">Llevamos juntos...</div>
-        <div id="reloj" class="reloj">Cargando...</div>
-    </div>
+    <h1>Para mi noviecita preciosa 💓</h1>
 
-    <div id="titulo-encima">Para mi noviecita preciosa 💓</div>
-
-    <div class="gift-container" onclick="abrirCaja()">
-        <div class="message-card">
+    <div class="gift-container">
+        <div class="message-inside">
             No importa dónde esté yo hoy, mi pensamiento y mi corazón están allá contigo. 
             <br><br>
             Feliz 14 de febrero a la mujer más bonita del mundo. 
             <br><br>
-            Te amo Bonita❤️
+            Te amo siempre💓.
         </div>
-        <div class="face front"></div>
-        <div class="face back"></div>
-        <div class="face left"></div>
-        <div class="face right"></div>
-        <div class="face bottom"></div>
-        <div class="lid"></div>
+        <div class="lid top"></div>
+        <div class="lid bottom"></div>
+        <div class="lid left"></div>
+        <div class="lid right"></div>
+        
+        <span class="heart" style="--x:-110px; --y:-160px;">❤️</span>
+        <span class="heart" style="--x:110px; --y:-160px;">💖</span>
+        <span class="heart" style="--x:-110px; --y:160px;">💗</span>
+        <span class="heart" style="--x:110px; --y:160px;">❤️</span>
     </div>
 
-    <p class="guia" id="instruccion">(Toca)</p>
+    <p style="margin-top: 20px; color: #ff85a1; font-size: 13px;">(Toca la cajita para abrirla)</p>
 
-    <script>
-        function abrirCaja() {
-            const box = document.querySelector('.gift-container');
-            const titulo = document.getElementById('titulo-encima');
-            const guia = document.getElementById('instruccion');
-            
-            box.classList.toggle('open');
-            
-            if(box.classList.contains('open')) {
-                titulo.classList.add('ocultar');
-                guia.style.opacity = "0";
-            } else {
-                titulo.classList.remove('ocultar');
-                guia.style.opacity = "1";
-            }
-        }
-
-        function actualizarContador() {
-            const inicio = new Date("2023-02-11T00:00:00");
-            const ahora = new Date();
-            const diff = ahora - inicio;
-            const d = Math.floor(diff / 86400000);
-            const h = Math.floor((diff % 86400000) / 3600000);
-            const m = Math.floor((diff % 3600000) / 60000);
-            const s = Math.floor((diff % 60000) / 1000);
-            document.getElementById("reloj").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-        }
-        setInterval(actualizarContador, 1000);
-        actualizarContador();
-    </script>
 </body>
 </html>

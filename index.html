@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para mi niña preciosa</title>
+    <title>Para mi niña preciosa❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -16,60 +16,62 @@
             margin: 0;
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
-            perspective: 2000px; /* Mayor profundidad */
+            perspective: 2000px;
         }
 
-        /* FOTOS: Grandes y ancladas a las esquinas para no ser tapadas */
+        /* FOTOS: No se tocan con nada */
         .foto-circular {
             position: absolute;
-            width: 110px;
-            height: 110px;
+            width: 115px;
+            height: 115px;
             border-radius: 50%;
             border: 4px solid #ffb3c1;
             object-fit: cover;
-            z-index: 100; /* Siempre visibles */
+            z-index: 100;
             box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
         }
         .foto1 { top: 2%; left: 2%; }
         .foto2 { top: 2%; right: 2%; }
-        .foto3 { bottom: 12%; left: 2%; } 
-        .foto4 { bottom: 12%; right: 2%; }
+        .foto3 { bottom: 8%; left: 2%; } 
+        .foto4 { bottom: 8%; right: 2%; }
 
-        /* CONTADOR: Bajado para no chocar con fotos superiores ni nota */
+        /* CONTADOR: Posición segura arriba */
         .contador-container {
-            margin-top: 130px; /* Bajado para dejar aire a las fotos de arriba */
+            margin-top: 50px;
             text-align: center;
             z-index: 10;
             color: #d63384;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 8px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 25px;
             border-radius: 20px;
             border: 1px solid #ffb3c1;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .reloj { font-size: 1.2rem; font-weight: bold; }
+        .reloj { font-size: 1.3rem; font-weight: bold; }
 
-        /* TEXTO QUE DESAPARECE: Centrado en la caja */
+        /* TEXTO ROJO EN MEDIO DE LA CAJA */
         #titulo-encima {
             font-family: 'Dancing Script', cursive;
-            color: #d63384;
-            font-size: 2rem;
+            color: #ff0000; /* ROJO PURO */
+            font-size: 1.8rem;
             position: absolute;
-            top: 55%; /* Centrado verticalmente sobre la caja */
-            transition: all 0.5s ease;
+            top: 52%; /* Justo en el centro de la caja */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s ease;
             z-index: 60;
             text-align: center;
-            width: 80%;
+            width: 90%;
             pointer-events: none;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
-        .ocultar { opacity: 0; transform: translateY(-20px); }
+        .ocultar { opacity: 0; visibility: hidden; }
 
-        /* CAJA 3D: Grande y centrada */
+        /* CAJA 3D */
         .gift-container {
             position: relative;
-            width: 200px;
-            height: 180px;
-            margin-top: 60px; /* Espacio bajo el contador */
+            width: 210px;
+            height: 190px;
+            margin-top: 100px; /* Bajada para que la tapa no toque el contador */
             transform-style: preserve-3d;
             transform: rotateX(-15deg) rotateY(15deg);
             transition: transform 1s ease;
@@ -77,43 +79,43 @@
             z-index: 20;
         }
         .gift-container.open { 
-            transform: rotateX(0deg) rotateY(0deg) translateY(40px); 
+            transform: rotateX(0deg) rotateY(0deg) translateY(80px); 
         }
 
         .face {
             position: absolute;
-            width: 200px;
-            height: 180px;
+            width: 210px;
+            height: 190px;
             background: #ff758f;
             border: 2px solid #ff4d6d;
             box-sizing: border-box;
         }
-        .front  { transform: translateZ(100px); }
-        .back   { transform: rotateY(180deg) translateZ(100px); }
-        .left   { transform: rotateY(-90deg) translateZ(100px); }
-        .right  { transform: rotateY(90deg) translateZ(100px); }
-        .bottom { transform: rotateX(-90deg) translateZ(90px); background: #e63946; height: 200px; }
+        .front  { transform: translateZ(105px); }
+        .back   { transform: rotateY(180deg) translateZ(105px); }
+        .left   { transform: rotateY(-90deg) translateZ(105px); }
+        .right  { transform: rotateY(90deg) translateZ(105px); }
+        .bottom { transform: rotateX(-90deg) translateZ(95px); background: #e63946; height: 210px; }
 
         .lid {
             position: absolute;
-            width: 210px;
-            height: 210px;
+            width: 220px;
+            height: 220px;
             background: #ff4d6d;
             border: 2px solid #d63384;
             top: -5px;
             left: -5px;
-            transform: rotateX(90deg) translateZ(100px);
+            transform: rotateX(90deg) translateZ(105px);
             transform-origin: top;
             transition: transform 1s ease;
             z-index: 10;
         }
-        .gift-container.open .lid { transform: rotateX(90deg) rotateX(-120deg) translateZ(100px); }
+        .gift-container.open .lid { transform: rotateX(90deg) rotateX(-110deg) translateZ(105px); }
 
-        /* NOTA BLANCA: Sale al frente absoluto sin tapar nada clave */
+        /* NOTA BLANCA: Posición final ajustada para no tapar el contador */
         .message-card {
             position: absolute;
-            width: 170px;
-            height: 150px;
+            width: 180px;
+            height: 160px;
             left: 15px;
             top: 15px;
             background: white;
@@ -125,28 +127,28 @@
             text-align: center;
             font-family: 'Dancing Script', cursive;
             font-size: 1.1rem;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform: translateZ(0); 
-            z-index: 200; /* Por delante de la caja */
+            z-index: 200;
             box-sizing: border-box;
             border: 1px solid #eee;
         }
         
+        /* Cuando se abre, la nota sube pero se queda abajo del contador */
         .gift-container.open .message-card {
-            transform: translateZ(250px) translateY(-190px); /* Sube hacia el centro del mensaje */
-            width: 280px; 
-            height: 240px;
+            transform: translateZ(220px) translateY(-160px); 
+            width: 290px; 
+            height: 230px;
             left: -40px; 
-            font-size: 1.25rem;
+            font-size: 1.3rem;
         }
 
         .guia { 
-            margin-top: 80px; 
+            margin-top: 120px; 
             color: #ff85a1; 
             font-size: 14px; 
             font-weight: bold;
-            z-index: 5;
         }
 
     </style>
@@ -159,7 +161,7 @@
     <img src="Foto4.jpg" class="foto-circular foto4">
 
     <div class="contador-container">
-        <div style="font-size: 0.8rem;">Nuestro amor comenzó hace...</div>
+        <div style="font-size: 0.8rem;">Llevamos juntos...</div>
         <div id="reloj" class="reloj">Cargando...</div>
     </div>
 
@@ -171,7 +173,7 @@
             <br><br>
             Feliz 14 de febrero a la mujer más bonita del mundo. 
             <br><br>
-            Te amo siempre ❤️
+            Te amo Bonita❤️
         </div>
         <div class="face front"></div>
         <div class="face back"></div>
@@ -181,7 +183,7 @@
         <div class="lid"></div>
     </div>
 
-    <p class="guia" id="instruccion">(Toca la cajita para ver la magia)</p>
+    <p class="guia" id="instruccion">(Toca)</p>
 
     <script>
         function abrirCaja() {
